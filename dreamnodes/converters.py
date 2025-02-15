@@ -1,8 +1,8 @@
-from conf import NodeCategories
-from core import BitMapImage
+from ..conf import NodeCategories
+from ..core import BitMapImage
 from torch import Tensor
 
-from core.images import Painter_Image
+from ..core.images import Painter_Image
 
 
 class DPaint_BitmapToImage:

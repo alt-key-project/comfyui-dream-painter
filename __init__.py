@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import core
+from .core import *
 import json, os
 import inspect
-import nodes
+from . import dreamnodes
 
 _NODE_CLASSES = []
-_NODE_CLASSES.extend(inspect.getmembers(nodes, inspect.isclass))
+for item in inspect.getmembers(dreamnodes, inspect.isclass):
+    _NODE_CLASSES.append(item[1])
+    print(str(item))
+#_NODE_CLASSES.extend(inspect.getmembers(nodes, inspect.isclass))
 
-_SIGNATURE_SUFFIX = " [DVB]"
+_SIGNATURE_SUFFIX = " [DPaint]"
 
 MANIFEST = {
     "name": "Dream Painter",
@@ -22,7 +25,7 @@ NODE_CLASS_MAPPINGS = {}
 
 NODE_DISPLAY_NAME_MAPPINGS = {}
 
-config = core.DPaint_Config()
+config = DPaint_Config()
 
 
 def update_category(cls):
