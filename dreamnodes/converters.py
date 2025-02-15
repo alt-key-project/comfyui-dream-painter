@@ -44,4 +44,4 @@ class DPaint_ImageToBitmap:
 
     def result(self, image: Tensor, threshold: float):
         t = int(round(255 * threshold))
-        return (BitMapImage(Painter_Image(tensor_image=image).point(lambda p: p > t and 255, "1")),)
+        return (BitMapImage(Painter_Image(tensor_image=image).point_1(lambda p: p > t and 255, "1")),)

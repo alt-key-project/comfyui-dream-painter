@@ -3,7 +3,7 @@ from functools import cache
 
 import numpy
 import torch
-from PIL import Image, ImageFilter, ImageEnhance
+from PIL import Image, ImageFilter, ImageEnhance, ImageOps
 from PIL.Image import Resampling
 from PIL.ImageDraw import ImageDraw
 from torch import Tensor
@@ -69,8 +69,8 @@ class Painter_Image:
         self._pil_image = pil_img
         return self._pil_image
 
-    def point(self, func, mode):
-        return Painter_Image(pil_image=self.pil_image.point(func, mode))
+    def point_1(self, func, mode):
+        return Painter_Image(pil_image=ImageOps.grayscale(self.pil_image).point(func, mode))
 
     @property
     def tensor_image(self):

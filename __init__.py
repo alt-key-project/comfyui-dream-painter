@@ -4,6 +4,7 @@ from .core import *
 import json, os
 import inspect
 from . import dreamnodes
+from .conf import DPaint_Config
 
 _NODE_CLASSES = []
 for item in inspect.getmembers(dreamnodes, inspect.isclass):
