@@ -2,9 +2,6 @@
 import json
 import os
 
-
-import folder_paths as comfy_paths
-
 _EMBEDDED_CONFIGURATION = {
     "debug": False,
     "paths": {
