@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys, os
-
-#sys.path.append(str(os.path.dirname(os.path.abspath(__file__))))
 
 from .conf import DPaint_Config
 

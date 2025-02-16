@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+from typing import List
+
 from PIL import Image, ImageFilter, ImageEnhance
-from PIL.Image import Resampling
-from PIL.ImageDraw import ImageDraw
 from torch import Tensor
 from .images import Painter_Image
 
 class BitMapImage:
-    TYPE_NAME = "BITMAP"
+    TYPE_NAME = "SINGLE_BITMAP"
 
     def __init__(self, pil_image: Image):
         if pil_image.mode != "1":
@@ -26,3 +26,16 @@ class BitMapImage:
             mode += "A"
         return Painter_Image(pil_image=self._pil_image.convert(mode)).tensor_image
 
+class BitMapImageList:
+    TYPE_NAME = "BITMAP"
+    def __init__(self, bitmaps: List[BitMapImage]):
+        self._bitmaps = bitmaps
+
+    def __iter__(self):
+        return iter(self._bitmaps)
+
+    def __getitem__(self, item):
+        return self._bitmaps[item]
+
+    def __len__(self):
+        return len(self._bitmaps)

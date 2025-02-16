@@ -1,2 +1,2 @@
-from .vector import Quad2d, Vector2d
-from .bitmap import BitMapImage
+from .vector import *
+from .bitmap import *
