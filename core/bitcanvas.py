@@ -24,13 +24,19 @@ class BitCanvas:
         self._pil_image = Image.new(mode="1", size=(int(round(width)),int(round(height))))
         self._draw = ImageDraw(im=self._pil_image,mode="1")
         self._draw.fill = True
+        self._fill_color = "white"
 
+    def flip_draw_color(self):
+        if self._fill_color == "white":
+            self._fill_color ="black"
+        else:
+            self._fill_color = "white"
 
     def ellipse(self, coordinate1: Tuple[int|float,int|float], coordinate2: Tuple[int|float,int|float]):
-        self._draw.ellipse(_coord_box(coordinate1, coordinate2), fill="white", width=0)
+        self._draw.ellipse(_coord_box(coordinate1, coordinate2), fill=self._fill_color, width=0)
 
     def rectangle(self, coordinate1: Tuple[int|float,int|float], coordinate2: Tuple[int|float,int|float]):
-        self._draw.rectangle(_coord_box(coordinate1, coordinate2), fill="white", width=0)
+        self._draw.rectangle(_coord_box(coordinate1, coordinate2), fill=self._fill_color, width=0)
 
     def bitmap(self):
         return BitMapImage(self._pil_image.convert("1"))
