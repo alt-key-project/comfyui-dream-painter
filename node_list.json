@@ -4,5 +4,6 @@
   "Bitmap OR [DPaint]": "",
   "Bitmap To Image [DPaint]": "Converts RGB(A) images to bitmap images.",
   "Bitmap XOR [DPaint]": "",
+  "Generate Checkerboard [DPaint]": "",
   "Image To Bitmap [DPaint]": "Converts bitmap images to RGB(A) images."
 }

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .conf import DPaint_Config
+from conf import DPaint_Config
 
 
 def setup_default_config():
