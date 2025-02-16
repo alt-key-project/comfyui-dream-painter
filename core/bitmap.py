@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from typing import List
 
-from PIL import Image, ImageFilter, ImageEnhance
-from jaxlib.xla_extension.ops import RegularizedIncompleteBeta
+from PIL import Image, ImageFilter, ImageEnhance, ImageChops
 from torch import Tensor
+
 from .images import Painter_Image, PaintColor
 
 class BitMapImage:
@@ -14,6 +14,19 @@ class BitMapImage:
             self._pil_image = pil_image.convert("1")
         else:
             self._pil_image = pil_image
+
+    def logical_xor(self, other):
+        return BitMapImage(ImageChops.logical_xor(self._pil_image, other._pil_image))
+
+    def logical_and(self, other):
+        return BitMapImage(ImageChops.logical_and(self._pil_image, other._pil_image))
+
+    def logical_or(self, other):
+        return BitMapImage(ImageChops.logical_or(self._pil_image, other._pil_image))
+
+    def invert(self):
+        return BitMapImage(ImageChops.invert(self._pil_image))
+
 
     def as_pil_bitmap(self):
         return self._pil_image

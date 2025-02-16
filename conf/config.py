@@ -18,27 +18,28 @@ _EMBEDDED_CONFIGURATION = {
         "prepend_icon_to_node": True,
         "append_icon_to_node": False,
         "category_icons": {
-            "io": "💾",
-            "animation": "🎥",
-            "postprocessing": "⚙",
-            "transforms": "🔀",
-            "transitions": "🎬",
-            "curves": "📈",
-            "color": "🎨",
+            "convert": "🛠",
             "generate": "⚡",
-            "camera": "🎥",
-            "base": "🎭",
-            "converters": "🛠",
-            "edit": "✂",
-            "image": "🌄",
-            "switches": "⭆",
-            "conditioning": "☯",
-            "batch": "🎞",
-            "DPaint": "🖌"
+            "DPaint": "🖌",
+            "bitmap": "▩",
+            "combine": "🟖",
+            "processing": "⚙"
         }
     },
 
 }
+
+"""
+class NodeCategories:
+    BITMAP_CONVERTERS = "image/bitmap/convert"
+    BITMAP_GENERATE = "image/bitmap/generate"
+    BITMAP_COMBINERS = "image/bitmap/combine"
+    BITMAP_PROCESSING = "image/bitmap/processing"
+    BITMAP = "image/bitmap"
+    IMAGE = "image"
+
+"""
+
 
 _config_data = None
 

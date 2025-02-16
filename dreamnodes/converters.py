@@ -8,7 +8,7 @@ from ..core.images import Painter_Image, PaintColor
 class DPaint_BitmapToImage:
     NODE_NAME = "Bitmap To Image"
     ICON = "🙾"
-    CATEGORY = NodeCategories.IMAGE_CONVERTERS
+    CATEGORY = NodeCategories.BITMAP_CONVERTERS
     RETURN_TYPES = ("IMAGE", )
     RETURN_NAMES = ("IMAGE", )
     FUNCTION = "result"
@@ -32,7 +32,7 @@ class DPaint_BitmapToImage:
 class DPaint_ImageToBitmap:
     NODE_NAME = "Image To Bitmap"
     ICON = "🙾"
-    CATEGORY = NodeCategories.IMAGE_CONVERTERS
+    CATEGORY = NodeCategories.BITMAP_CONVERTERS
     RETURN_TYPES = (BitMapImageList.TYPE_NAME, )
     RETURN_NAMES = ("BITMAP", )
     FUNCTION = "result"

@@ -1,2 +1,2 @@
-from .converters import DPaint_BitmapToImage
-from .converters import DPaint_ImageToBitmap
+from .converters import *
+from .bitmapops import *
