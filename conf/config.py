@@ -8,8 +8,8 @@ import folder_paths as comfy_paths
 _EMBEDDED_CONFIGURATION = {
     "debug": False,
     "paths": {
-        "default_input": comfy_paths.input_directory,
-        "default_output": comfy_paths.output_directory
+        "default_input": "input",
+        "default_output": "output"
     },
     "ui": {
         "top_category": "DPaint",

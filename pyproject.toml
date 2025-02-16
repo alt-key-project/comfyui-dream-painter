@@ -3,7 +3,7 @@ name = "comfyui-dream-painter"
 description = "Provide utilities for 2D image generation and processing."
 version = "0.0.1"
 license = { file = "LICENSE" }
-dependencies = ["imageio", "pilgram", "scipy", "numpy<2.0,>=1.18", "torchvision", "evalidate", "drawsvg[raster]~=2.0"]
+dependencies = ["imageio", "pilgram", "scipy", "numpy<2.0,>=1.18", "torchvision", "evalidate", "drawsvg~=2.0", "svglib"]
 
 [project.urls]
 Repository = "https://github.com/alt-key-project/comfyui-dream-painter"

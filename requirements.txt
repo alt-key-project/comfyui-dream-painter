@@ -4,4 +4,5 @@ scipy
 numpy<2.0.0,>=1.18
 torchvision
 evalidate
-drawsvg[raster]~=2.0
+drawsvg~=2.0
+svglib
