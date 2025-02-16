@@ -4,7 +4,6 @@ from functools import cache
 import numpy
 import torch
 from PIL import Image, ImageFilter, ImageEnhance, ImageOps
-from PIL.Image import Resampling
 from PIL.ImageDraw import ImageDraw
 from torch import Tensor
 from .vector import *
@@ -166,7 +165,7 @@ class Painter_Image:
         return Painter_Image(pil_image=self.pil_image.crop((left, top, right, bottom)))
 
     def rotate(self, degrees_cw):
-        return Painter_Image(pil_image=self.pil_image.rotate(degrees_cw, Resampling.BILINEAR))
+        return Painter_Image(pil_image=self.pil_image.rotate(degrees_cw))
 
     @property
     def width(self):
