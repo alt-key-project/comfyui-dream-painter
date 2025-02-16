@@ -16,6 +16,8 @@ def _convert_from_pil_to_tensor(pil_image):
     return torch.from_numpy(numpy.array(pil_image).astype(numpy.float32) / 255.0)
 
 
+
+
 class PaintColor:
     def __init__(self, hex: str):
         self._hex = hex.strip().strip("#")
@@ -86,7 +88,6 @@ class Painter_Image:
     def __init__(self, tensor_image=None, pil_image=None, file_path=None, with_alpha=False):
         if tensor_image is None and pil_image is None and file_path is None:
             raise Exception("No Image provided!")
-
         self._tensor_image = tensor_image
         self._pil_image = pil_image
         if pil_image is None and file_path is not None:
