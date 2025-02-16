@@ -17,6 +17,72 @@ def _convert_from_pil_to_tensor(pil_image):
     return torch.from_numpy(numpy.array(pil_image).astype(numpy.float32) / 255.0)
 
 
+class PaintColor:
+    def __init__(self, hex: str):
+        self._hex = hex.strip().strip("#")
+        if len(self._hex) == 3:
+            self._hex = self._hex[0]+self._hex[0]+self._hex[1]+self._hex[1]+self._hex[2]+self._hex[2]+"ff"
+        elif len(self._hex) == 4:
+            self._hex = self._hex[0]+self._hex[0]+self._hex[1]+self._hex[1]+self._hex[2]+self._hex[2]+self._hex[3]+self._hex[3]
+        if len(self._hex) > 8:
+            self._hex = self._hex[0:7]
+        if len(self._hex) == 6:
+            self._hex = self._hex + "ff"
+
+    def __str__(self):
+        return "#"+self._hex.upper()
+
+    @property
+    def red(self):
+        return self.red_int / 255.0
+
+
+    @property
+    def green(self):
+        return self.green_int / 255.0
+
+
+    @property
+    def blue(self):
+        return self.blue_int / 255.0
+
+    @property
+    def alpha(self):
+        return self.alpha_int / 255.0
+
+    @property
+    def red_int(self):
+        return int("0x"+self.red_hex, 16)
+
+    @property
+    def green_int(self):
+        return int("0x"+self.green_hex, 16)
+
+    @property
+    def blue_int(self):
+        return int("0x"+self.blue_hex, 16)
+
+    @property
+    def alpha_int(self):
+        return int("0x"+self.blue_hex, 16)
+
+    @property
+    def red_hex(self):
+        return self._hex[0:2]
+
+    @property
+    def green_hex(self):
+        return self._hex[2:4]
+
+    @property
+    def blue_hex(self):
+        return self._hex[4:6]
+
+    @property
+    def alpha_hex(self):
+        return self._hex[6:8]
+
+
 class Painter_Image:
     def __init__(self, tensor_image=None, pil_image=None, file_path=None, with_alpha=False):
         if tensor_image is None and pil_image is None and file_path is None:
@@ -47,8 +113,6 @@ class Painter_Image:
         image_tensors = [_to_tensor(image) for image in images]
 
         tensor = torch.stack(image_tensors)
-        #arr = numpy.array(image_tensors)
-        #tensor = torch.from_numpy(arr)
         assert len(tensor) == len(images)
         return tensor
 
