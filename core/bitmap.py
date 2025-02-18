@@ -16,6 +16,34 @@ class BitMapImage:
         else:
             self._pil_image = pil_image
 
+
+    def paste(self, bitmap, x, y):
+        img = self._pil_image.copy()
+        img.paste(bitmap._pil_image, (x,y))
+        return BitMapImage(img)
+
+    @classmethod
+    def new_of_size(cls, width: int, height: int, fill_color = 0):
+        return BitMapImage(Image.new("1",(width,height), color=fill_color))
+
+    @property
+    def _img(self) -> Image:
+        return self._pil_image
+
+    @property
+    def width(self) -> int:
+        return self._pil_image.size[0]
+
+    @property
+    def height(self) -> int:
+        return self._pil_image.size[1]
+
+    def resize_to(self, width, height):
+        return BitMapImage(self._pil_image.resize((width,height)))
+
+    def crop(self, x, y, width, height):
+        return BitMapImage(self._pil_image.crop((x,y,x+width,y+height)))
+
     def logical_xor(self, other):
         return BitMapImage(ImageChops.logical_xor(self._pil_image, other._pil_image))
 
@@ -27,6 +55,13 @@ class BitMapImage:
 
     def invert(self):
         return BitMapImage(ImageChops.invert(self._pil_image))
+
+    def rotate(self, center_x, center_y, degrees, expand = True, fill_color = 0):
+        if fill_color:
+            fill_color = (1,)
+        else:
+            fill_color = (0,)
+        return BitMapImage(self._pil_image.rotate(degrees, fillcolor = fill_color, resample=Image.BILINEAR, expand = expand, center = (center_x, center_y)))
 
     def as_pil_bitmap(self):
         return self._pil_image

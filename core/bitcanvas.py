@@ -32,6 +32,12 @@ class BitCanvas:
         else:
             self._fill_color = "white"
 
+    def color_black(self):
+        self._fill_color = "black"
+
+    def color_white(self):
+        self._fill_color = "white"
+
     def ellipse(self, coordinate1: Tuple[int|float,int|float], coordinate2: Tuple[int|float,int|float]):
         self._draw.ellipse(_coord_box(coordinate1, coordinate2), fill=self._fill_color, width=0)
 

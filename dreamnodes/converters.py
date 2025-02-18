@@ -51,3 +51,24 @@ class DPaint_ImageToBitmap:
         painter_images = Painter_Image.images_from_tensor_data(IMAGE)
         bitmaps = [BitMapImage(pimg.point_1(lambda p: p > t and 255, "1").pil_image) for pimg in painter_images]
         return (bitmaps,)
+
+class DPaint_Dimensions:
+    NODE_NAME = "Bitmap Dimensions"
+    ICON = "🔎"
+    CATEGORY = NodeCategories.BITMAP
+    RETURN_TYPES = ("INT","INT")
+    RETURN_NAMES = ("width","height")
+    FUNCTION = "result"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "BITMAP": (BitMapImageList.TYPE_NAME, {}),
+            }
+        }
+
+    def result(self, BITMAP : BitMapImageList):
+        for bm in BITMAP:
+            return (bm.width,bm.height)
+        return (None, None)

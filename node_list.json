@@ -1,7 +1,12 @@
 {
   "Bitmap AND [DPaint]": "",
+  "Bitmap Crop Center [DPaint]": "",
+  "Bitmap Dimensions [DPaint]": "",
+  "Bitmap Expand Canvas [DPaint]": "",
   "Bitmap Invert [DPaint]": "",
   "Bitmap OR [DPaint]": "",
+  "Bitmap Resize [DPaint]": "",
+  "Bitmap Rotate [DPaint]": "",
   "Bitmap To Image [DPaint]": "Converts RGB(A) images to bitmap images.",
   "Bitmap XOR [DPaint]": "",
   "Bullseye [DPaint]": "",

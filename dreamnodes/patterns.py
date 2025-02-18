@@ -22,20 +22,23 @@ class DPaint_Bullseye:
             "required": {
                 "width": ("INT", {"min": 1, "max": 10000, "default": 512}),
                 "height": ("INT", {"min": 1, "max": 10000, "default": 512}),
-                "circle_width": ("INT", {"min": 1, "max": 10000, "default": 64}),
+                "circle_width_x": ("INT", {"min": 1, "max": 10000, "default": 32}),
+                "circle_width_y": ("INT", {"min": 1, "max": 10000, "default": 32}),
+                "center_x": ("INT", {"min": 1, "max": 10000, "default": 256}),
+                "center_y": ("INT", {"min": 1, "max": 10000, "default": 256}),
             }
         }
 
-    def result(self, width, height, circle_width):
-        max_distance = round(math.sqrt(width*width+height*height))
-        num_circles = 1 + int(round(max_distance / circle_width))
+    def result(self, width, height, circle_width_x, circle_width_y, center_x, center_y):
+        dist_x = max(abs(width-center_x), abs(center_x))
+        dist_y = max(abs(height-center_y), abs(center_y))
+        num_circles = 1 + max(int(round(dist_x / circle_width_x)),int(round(dist_y / circle_width_y)))
         canvas = BitCanvas(width, height)
-        cx = round(width /2)
-        cy = round(height/2)
         for i in range(num_circles):
-            diameter = round((num_circles - i) * circle_width)
-            radius = diameter / 2
-            canvas.ellipse((cx - radius, cy - radius), (cx + radius, cx + radius))
+            radius_x = round(circle_width_x * (num_circles-i))
+            radius_y = round(circle_width_y * (num_circles-i))
+            canvas.ellipse((center_x - radius_x, center_y - radius_y),
+                           (center_x + radius_x, center_y + radius_y))
             canvas.flip_draw_color()
         return (BitMapImageList([canvas.bitmap()]),)
 
