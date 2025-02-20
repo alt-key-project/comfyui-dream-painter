@@ -1,9 +1,83 @@
 
 from ..conf import NodeCategories
-from ..core import BitMapImageList, BitCanvas
+from ..core import BitMapImageList, BitCanvas, Vector2d
+import math
 
 WHITE = "#ffffff"
 BLACK = "#000000"
+
+class DPaint_NPolygon:
+    NODE_NAME = "Generate Stripes"
+    ICON = "▧"
+    CATEGORY = NodeCategories.BITMAP_GENERATE
+    RETURN_TYPES = (BitMapImageList.TYPE_NAME,)
+    RETURN_NAMES = ("BITMAP",)
+    FUNCTION = "result"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "bitmap_width": ("INT", {"min": 1, "max": 10000, "default": 512}),
+                "bitmap_height": ("INT", {"min": 1, "max": 10000, "default": 512}),
+                "stripe_width": ("INT", {"min": 2, "max": 10000, "default": 32}),
+                "rotation_degrees": ("FLOAT",{"min": -360, "max":360.0, "default": 0})
+            }
+        }
+
+    def result(self, edges, bitmap_width, bitmap_height, stripe_width, rotation_degrees):
+        canvas = BitCanvas(bitmap_width, bitmap_height)
+        stripe_length = math.sqrt(bitmap_width*bitmap_width + bitmap_height*bitmap_height)
+
+        stripe_vector = Vector2d(0,1).rotate(rotation_degrees)
+        num_stripes =round(0.5 * stripe_length / stripe_width)
+        
+
+        degrees_per_edge = 360.0 / edges
+        start_point = Vector2d(center_x, center_y - shape_size * 0.5)
+        center_point = Vector2d(center_x, center_y)
+        v = start_point.sub(center_point)
+        points = [center_point.add(v.rotate(rotation_degrees)).as_tuple()]
+        for i in range(edges-1):
+            new_point = center_point.add(v.rotate(rotation_degrees+(i+1)*degrees_per_edge))
+            points.append(new_point.as_tuple())
+        canvas.polygon(points)
+        return (BitMapImageList([canvas.bitmap()]),)
+
+class DPaint_NPolygon:
+    NODE_NAME = "Generate N-Polygon"
+    ICON = "◄"
+    CATEGORY = NodeCategories.BITMAP_GENERATE
+    RETURN_TYPES = (BitMapImageList.TYPE_NAME,)
+    RETURN_NAMES = ("BITMAP",)
+    FUNCTION = "result"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "edges": ("INT", {"min": 3, "max": 24, "default": 3}),
+                "bitmap_width": ("INT", {"min": 1, "max": 10000, "default": 512}),
+                "bitmap_height": ("INT", {"min": 1, "max": 10000, "default": 512}),
+                "shape_size": ("INT", {"min": 1, "max": 10000, "default": 400}),
+                "center_x": ("INT", {"min": 1, "max": 10000, "default": 256}),
+                "center_y": ("INT", {"min": 1, "max": 10000, "default": 256}),
+                "rotation_degrees": ("FLOAT",{"min": -360, "max":360.0, "default": 0})
+            }
+        }
+
+    def result(self, edges, bitmap_width, bitmap_height, shape_size, center_x, center_y, rotation_degrees):
+        canvas = BitCanvas(bitmap_width, bitmap_height)
+        degrees_per_edge = 360.0 / edges
+        start_point = Vector2d(center_x, center_y - shape_size * 0.5)
+        center_point = Vector2d(center_x, center_y)
+        v = start_point.sub(center_point)
+        points = [center_point.add(v.rotate(rotation_degrees)).as_tuple()]
+        for i in range(edges-1):
+            new_point = center_point.add(v.rotate(rotation_degrees+(i+1)*degrees_per_edge))
+            points.append(new_point.as_tuple())
+        canvas.polygon(points)
+        return (BitMapImageList([canvas.bitmap()]),)
 
 class DPaint_Rectangle:
     NODE_NAME = "Generate Rectangle"

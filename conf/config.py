@@ -20,23 +20,12 @@ _EMBEDDED_CONFIGURATION = {
             "DPaint": "🖌",
             "bitmap": "▩",
             "combine": "🟖",
-            "processing": "⚙"
+            "process": "⚙",
+            "shape": "▢"
         }
     },
 
 }
-
-"""
-class NodeCategories:
-    BITMAP_CONVERTERS = "image/bitmap/convert"
-    BITMAP_GENERATE = "image/bitmap/generate"
-    BITMAP_COMBINERS = "image/bitmap/combine"
-    BITMAP_PROCESSING = "image/bitmap/processing"
-    BITMAP = "image/bitmap"
-    IMAGE = "image"
-
-"""
-
 
 _config_data = None
 

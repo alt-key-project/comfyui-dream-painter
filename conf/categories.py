@@ -6,4 +6,5 @@ class NodeCategories:
     BITMAP_COMBINERS = "bitmap/combine"
     BITMAP_PROCESSING = "bitmap/process"
     BITMAP = "bitmap"
+    SHAPE = "shape"
 

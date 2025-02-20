@@ -4,6 +4,8 @@ from __future__ import division
 import math
 from functools import cache
 
+from simsimd import cosine
+
 
 class Vector2d:
     def __init__(self, x, y=0.0):
@@ -55,6 +57,15 @@ class Vector2d:
 
     def sub(self, vector):
         return Vector2d(self.x - vector.x, self.y - vector.y)
+
+    def as_tuple(self):
+        return (self.x, self.y)
+
+    def rotate(self, degrees):
+        radians = (degrees / 360.0) * (math.pi * 2)
+        x2 = math.cos(radians) * self.x - math.sin(radians) * self.y
+        y2 = math.sin(radians) * self.x + math.cos(radians) * self.y
+        return Vector2d(x2,y2)
 
     def __repr__(self):
         return str(self)
