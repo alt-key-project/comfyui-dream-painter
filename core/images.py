@@ -1,34 +1,42 @@
 # -*- coding: utf-8 -*-
+import re
 from functools import cache
 
 import numpy
 import torch
-from PIL import Image, ImageFilter, ImageEnhance, ImageOps
+from PIL import Image, ImageFilter, ImageEnhance, ImageOps, ImageColor
 from PIL.ImageDraw import ImageDraw
 from torch import Tensor
 from .vector import *
+
+from comfy.utils import common_upscale, ProgressBar
 
 def _convert_tensor_image_to_pil(tensor_image) -> Image:
     return Image.fromarray(numpy.clip(255. * tensor_image.cpu().numpy().squeeze(), 0, 255).astype(numpy.uint8))
 
 
-def _convert_from_pil_to_tensor(pil_image):
+def _convert_from_pil_to_tensor_old(pil_image):
     return torch.from_numpy(numpy.array(pil_image).astype(numpy.float32) / 255.0)
+
 
 
 
 
 class PaintColor:
     def __init__(self, hex: str):
-        self._hex = hex.strip().strip("#")
-        if len(self._hex) == 3:
-            self._hex = self._hex[0]+self._hex[0]+self._hex[1]+self._hex[1]+self._hex[2]+self._hex[2]+"ff"
-        elif len(self._hex) == 4:
-            self._hex = self._hex[0]+self._hex[0]+self._hex[1]+self._hex[1]+self._hex[2]+self._hex[2]+self._hex[3]+self._hex[3]
-        if len(self._hex) > 8:
-            self._hex = self._hex[0:7]
-        if len(self._hex) == 6:
-            self._hex = self._hex + "ff"
+        self._hex = ""
+        try:
+            if re.match(r"^[0-9a-f]+$", hex.strip().lower()):
+                hex = "#"+ hex
+            for c in ImageColor.getrgb(hex):
+                self._hex += format(c, 'x').zfill(2)
+            while len(self._hex) < 8:
+                self._hex += "f"
+            self._hex = self._hex.lower()
+        except Exception as e:
+            print("FAILED TO PARSE COLOR: "+str(e))
+            self._hex = "00000000"
+
 
     def __str__(self):
         return "#"+self._hex.upper()
@@ -103,6 +111,8 @@ class Painter_Image:
 
     @classmethod
     def join_to_tensor_data(cls, images):
+        if len(images) == 1:
+            return images[0].tensor_image
         def _to_tensor(img):
             t = img
             if t is None:
@@ -114,6 +124,7 @@ class Painter_Image:
 
         tensor = torch.stack(image_tensors)
         assert len(tensor) == len(images)
+
         return tensor
 
     @classmethod

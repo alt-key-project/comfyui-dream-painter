@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-dream-painter"
 description = "Provide utilities for 2D image generation and processing."
-version = "0.0.1"
+version = "0.0.2"
 license = { file = "LICENSE" }
 dependencies = ["imageio", "pilgram", "scipy", "numpy<2.0,>=1.18", "torchvision", "evalidate", "drawsvg~=2.0", "pillow-svg"]
 

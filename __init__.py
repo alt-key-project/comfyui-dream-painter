@@ -14,7 +14,7 @@ _SIGNATURE_SUFFIX = " [DPaint]"
 
 MANIFEST = {
     "name": "Dream Painter",
-    "version": (0, 0, 1),
+    "version": (0, 0, 2),
     "author": "Dream Project",
     "project": "https://github.com/alt-key-project/comfyui-dream-painter",
     "description": "2D image generation and processing",

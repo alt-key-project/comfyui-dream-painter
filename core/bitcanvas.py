@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from typing import List, Tuple
+from typing import List, Tuple, Iterable
 
-from PIL import Image, ImageFilter, ImageEnhance, ImageOps
+from PIL import Image, ImageFilter, ImageEnhance, ImageOps, ImageChops
 from PIL.ImageDraw import ImageDraw
+from typing_extensions import Self
 
 from . import Vector2d
 from .bitmap import BitMapImage
@@ -29,9 +30,13 @@ class BitCanvas:
         self._draw = ImageDraw(im=self._pil_image,mode="1")
         self._draw.fill = True
         self._fill_color = BitCanvas.COLOR_WHITE
+        self.width = self._pil_image.width
+        self.height = self._pil_image.height
+        self.last_x = self.width - 1
+        self.last_y = self.height - 1
 
-    def combine_xor(self, other):
-        self._pil_image = BitMapImage(self._pil_image).logical_xor(BitMapImage(other._pil_image))
+    def combine_xor(self, other : Self):
+        self._pil_image = ImageChops.logical_xor(self._pil_image, other._pil_image)
 
     def set_fill(self, fill):
         if fill:
@@ -42,16 +47,8 @@ class BitCanvas:
     def clear_copy(self):
         return BitCanvas(self.width, self.height)
 
-    @property
-    def width(self):
-        return self._pil_image.width
-
-    @property
-    def height(self):
-        return self._pil_image.height
-
     def multiply_vector_with_dimensions(self, v : Vector2d) -> Vector2d:
-        return Vector2d(v.x * self.width, v.y * self.height)
+        return Vector2d(v.x * self.last_x, v.y * self.last_y)
 
     def flip_draw_color(self):
         if self._fill_color == "white":
@@ -79,6 +76,9 @@ class BitCanvas:
 
     def line(self, x1, y1, x2, y2, width):
         self._draw.line(xy = ((x1,y1),(x2,y2)), fill=self._pil_color(), width=width)
+
+    def polyline(self, xy: Iterable[Tuple[int|float,int|float]], width):
+        self._draw.line(xy = xy, fill=self._pil_color(), width=width)
 
     def polygon(self, points: List[Tuple[int|float,int|float]]):
         self._draw.polygon(xy=points,fill=self._pil_color(), outline=self._pil_color())
