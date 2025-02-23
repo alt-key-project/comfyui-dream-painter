@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-dream-painter"
 description = "A set of nodes for generation of simple 2D graphics ComfyUI. These are intended for guiding image generation, for instance using controlnets. "
-version = "1.0.1"
+version = "1.0.2"
 license = { file = "LICENSE" }
 dependencies = ["imageio", "pilgram", "scipy", "numpy<2.0,>=1.18", "torchvision", "evalidate", "drawsvg~=2.0", "pillow-svg"]
 
