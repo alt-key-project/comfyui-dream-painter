@@ -57,8 +57,6 @@ class BitCanvas:
             (v.y - viewport[0].y) / viewport_height,
         )
         vout = Vector2d(normalized_v.x * self.last_x, normalized_v.y * self.last_y)
-        if (vout.x < 0 or vout.x > self.last_x or vout.y < 0 or vout.y > self.last_y):
-            print("VECTOR OUTSIDE VIEWPORT "+str(v)+" -> "+str(vout))
         return vout
 
     def flip_draw_color(self):

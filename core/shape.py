@@ -34,8 +34,6 @@ class ShapeContent:
     def _check_viewport(self, viewport: Tuple[Vector2d, Vector2d]):
         if (viewport[1].x <= viewport[0].x or viewport[1].y <= viewport[0].y):
             raise Exception("Bad viewport! " + str(viewport))
-        else:
-            print("Drawing in viewport: "+str(viewport))
 
     def draw_normal(self, bitcanvas: BitCanvas, fill: bool = True, line_width: float = 1,
                     viewport: Tuple[Vector2d, Vector2d] = (Vector2d(0, 0), Vector2d(1, 1))):
