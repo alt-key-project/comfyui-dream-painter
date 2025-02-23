@@ -2,6 +2,7 @@ from ..conf import NodeCategories
 from ..core import BitMapImage
 
 class DPaint_Dimensions:
+    """Returns dimensions of a bitmap."""
     NODE_NAME = "Bitmap Dimensions"
     ICON = "🔎"
     CATEGORY = NodeCategories.BITMAP

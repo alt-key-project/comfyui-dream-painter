@@ -1,6 +1,4 @@
-import numpy, torch
-from PIL import ImageOps
-
+from ..core import Vector2d
 from ..conf import NodeCategories
 from ..core import BitMapImage
 from ..core import Shape, BitCanvas
@@ -10,6 +8,7 @@ from ..core.images import Painter_Image, PaintColor
 
 
 class DPaint_BitmapToImage:
+    """Converts a bitmap into an RGB image and a mask."""
     NODE_NAME = "Bitmap To Image & Mask"
     ICON = "🙾"
     CATEGORY = NodeCategories.BITMAP_CONVERTERS
@@ -27,16 +26,17 @@ class DPaint_BitmapToImage:
             }
         }
 
-    def result(self, BITMAP : BitMapImage, color_0_hex: str, color_1_hex: str):
+    def result(self, BITMAP: BitMapImage, color_0_hex: str, color_1_hex: str):
         return BITMAP.as_tensor_image_and_mask(PaintColor(color_0_hex), PaintColor(color_1_hex))
 
 
 class DPaint_ImageToBitmap:
+    """Converts an image into a bitmap."""
     NODE_NAME = "Image To Bitmap"
     ICON = "🙾"
     CATEGORY = NodeCategories.BITMAP_CONVERTERS
-    RETURN_TYPES = (BitMapImage.TYPE_NAME, )
-    RETURN_NAMES = ("BITMAP", )
+    RETURN_TYPES = (BitMapImage.TYPE_NAME,)
+    RETURN_NAMES = ("BITMAP",)
     FUNCTION = "result"
 
     @classmethod
@@ -54,9 +54,11 @@ class DPaint_ImageToBitmap:
         if painter_images:
             return (BitMapImage(painter_images[0].point_1(lambda p: p > t and 255, "1").pil_image),)
         else:
-            return (BitMapImage.new_of_size(1,1),)
+            return (BitMapImage.new_of_size(1, 1),)
+
 
 class DPaint_BitmapDrawShape:
+    """Renders a shape as a bitmap."""
     NODE_NAME = "Draw Shape As Bitmap"
     ICON = "✎"
     CATEGORY = NodeCategories.BITMAP_GENERATE
@@ -71,22 +73,25 @@ class DPaint_BitmapDrawShape:
                 "SHAPE": (Shape.TYPE_NAME,),
                 "fill": (["yes", "no"],),
                 "draw_mode": (["normal", "xor"],),
-                "bitmap_width": ("INT", {"default": 512}),
-                "bitmap_height": ("INT", {"default": 512}),
-                "shape_offset_x": ("INT", {"default": 0}),
-                "shape_offset_y": ("INT", {"default": 0}),
+                "shape_bound_x_min": ("FLOAT", {"default": 0.0}),
+                "shape_bound_y_min": ("FLOAT", {"default": 0.0}),
+                "shape_bound_x_max": ("FLOAT", {"default": 1.0}),
+                "shape_bound_y_max": ("FLOAT", {"default": 1.0}),
+                "bitmap_width": ("INT", {"default": 512, "min": BitMapImage.MIN_SIZE_PIXELS}),
+                "bitmap_height": ("INT", {"default": 512, "min": BitMapImage.MIN_SIZE_PIXELS}),
                 "line_width": ("INT", {"default": 1}),
             }
         }
 
-    def result(self, SHAPE, bitmap_width, bitmap_height, shape_offset_x, shape_offset_y, fill: str, line_width, draw_mode):
+    def result(self, SHAPE, bitmap_width, bitmap_height, shape_bound_x_min, shape_bound_y_min, shape_bound_x_max,
+               shape_bound_y_max, fill: str, line_width, draw_mode):
         canvas = BitCanvas(bitmap_width, bitmap_height)
-        s = SHAPE
-        if shape_offset_x or shape_offset_y:
-            s = s.copy()
-            s.translate(shape_offset_x / bitmap_width, shape_offset_y / bitmap_width)
+        do_fill = fill == "yes"
+        s = SHAPE.copy()
+        #s.scale(new_width / current_width, new_height / current_height)
+        viewport = (Vector2d(shape_bound_x_min, shape_bound_y_min), Vector2d(shape_bound_x_max, shape_bound_y_max))
         if draw_mode == "normal":
-            s.draw_normal(canvas, fill == "yes", line_width)
+            s.draw_normal(canvas, do_fill, line_width, viewport=viewport)
         elif draw_mode == "xor":
-            s.draw_xor(canvas, fill == "yes", line_width)
+            s.draw_xor(canvas, do_fill, line_width, viewport=viewport)
         return (canvas.bitmap(),)

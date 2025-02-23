@@ -14,10 +14,10 @@ _SIGNATURE_SUFFIX = " [DPaint]"
 
 MANIFEST = {
     "name": "Dream Painter",
-    "version": (0, 0, 2),
+    "version": (1, 0, 0),
     "author": "Dream Project",
     "project": "https://github.com/alt-key-project/comfyui-dream-painter",
-    "description": "2D image generation and processing",
+    "description": "A set of nodes for generation of simple 2D graphics ComfyUI. These are intended for guiding image generation, for instance using controlnets.",
 }
 
 NODE_CLASS_MAPPINGS = {}
@@ -70,17 +70,15 @@ for cls in _NODE_CLASSES:
 
 
 def update_node_index():
+    import inspect
     node_list_path = os.path.join(os.path.dirname(__file__), "node_list.json")
-    with open(node_list_path) as f:
-        node_list = json.loads(f.read())
-    updated = False
+    if os.path.isfile(node_list_path):
+        return
+    node_list = dict()
     for nodename in NODE_CLASS_MAPPINGS.keys():
-        if nodename not in node_list:
-            node_list[nodename] = ""
-            updated = True
-    if updated or True:
-        with open(node_list_path, "w") as f:
-            f.write(json.dumps(node_list, indent=2, sort_keys=True))
+        node_list[nodename] = inspect.getdoc(NODE_CLASS_MAPPINGS[nodename])
+    with open(node_list_path, "w") as f:
+        f.write(json.dumps(node_list, indent=2, sort_keys=True))
 
 
 update_node_index()

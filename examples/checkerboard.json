@@ -1,0 +1,254 @@
+{
+  "last_node_id": 27,
+  "last_link_id": 38,
+  "nodes": [
+    {
+      "id": 19,
+      "type": "Shape of Rectangle [DPaint]",
+      "pos": [
+        -793.3182983398438,
+        -631.5498046875
+      ],
+      "size": [
+        315,
+        130
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SHAPE",
+          "type": "SHAPE",
+          "links": [
+            30
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Shape of Rectangle [DPaint]"
+      },
+      "widgets_values": [
+        1,
+        1,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": 21,
+      "type": "Bitmap To Image & Mask [DPaint]",
+      "pos": [
+        532.7316284179688,
+        -631.5498046875
+      ],
+      "size": [
+        315,
+        102
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "BITMAP",
+          "type": "BITMAP",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            33
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Bitmap To Image & Mask [DPaint]"
+      },
+      "widgets_values": [
+        "000000",
+        "ffffff"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "PreviewImage",
+      "pos": [
+        944.771728515625,
+        -631.5498046875
+      ],
+      "size": [
+        411.1148376464844,
+        367.731689453125
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 33
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 20,
+      "type": "Shape Grid [DPaint]",
+      "pos": [
+        -337.1308898925781,
+        -631.5498046875
+      ],
+      "size": [
+        315,
+        178
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "SHAPE",
+          "type": "SHAPE",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SHAPE",
+          "type": "SHAPE",
+          "links": [
+            31
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Shape Grid [DPaint]"
+      },
+      "widgets_values": [
+        0.75,
+        0.75,
+        8,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "id": 18,
+      "type": "Draw Shape As Bitmap [DPaint]",
+      "pos": [
+        123.96142578125,
+        -631.5498046875
+      ],
+      "size": [
+        315,
+        250
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "SHAPE",
+          "type": "SHAPE",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "BITMAP",
+          "type": "BITMAP",
+          "links": [
+            32
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Draw Shape As Bitmap [DPaint]"
+      },
+      "widgets_values": [
+        "yes",
+        "normal",
+        0,
+        0,
+        1,
+        1,
+        512,
+        512,
+        1
+      ]
+    }
+  ],
+  "links": [
+    [
+      30,
+      19,
+      0,
+      20,
+      0,
+      "SHAPE"
+    ],
+    [
+      31,
+      20,
+      0,
+      18,
+      0,
+      "SHAPE"
+    ],
+    [
+      32,
+      18,
+      0,
+      21,
+      0,
+      "BITMAP"
+    ],
+    [
+      33,
+      21,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8140274938684303,
+      "offset": [
+        1142.1197532079495,
+        968.6355440209036
+      ]
+    },
+    "node_versions": {
+      "comfyui-dream-painter": "5e1a60bedd57d041c911c900ff77e72f7f6beb30",
+      "comfy-core": "0.3.15"
+    },
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

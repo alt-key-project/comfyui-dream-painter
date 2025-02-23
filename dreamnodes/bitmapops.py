@@ -3,6 +3,7 @@ from ..core import BitMapImage
 
 
 class DPaint_LogicalInvert:
+    """Bitmap inverter."""
     NODE_NAME = "Bitmap Invert"
     ICON = "◈"
     CATEGORY = NodeCategories.BITMAP_PROCESSING
@@ -23,6 +24,7 @@ class DPaint_LogicalInvert:
 
 
 class DPaint_LogicalOR:
+    """OR bitmap combine operation."""
     NODE_NAME = "Bitmap OR"
     ICON = "∨"
     CATEGORY = NodeCategories.BITMAP_COMBINERS
@@ -44,6 +46,7 @@ class DPaint_LogicalOR:
 
 
 class DPaint_LogicalAND:
+    """AND bitmap combine operation."""
     NODE_NAME = "Bitmap AND"
     ICON = "∧"
     CATEGORY = NodeCategories.BITMAP_COMBINERS
@@ -65,6 +68,7 @@ class DPaint_LogicalAND:
 
 
 class DPaint_LogicalXOR:
+    """Exclusive OR bitmap combine operation."""
     NODE_NAME = "Bitmap XOR"
     ICON = "⊻"
     CATEGORY = NodeCategories.BITMAP_COMBINERS
@@ -86,6 +90,7 @@ class DPaint_LogicalXOR:
 
 
 class DPaint_BitmapResize:
+    """Resize/scale of bitmap."""
     NODE_NAME = "Bitmap Resize"
     ICON = "🔎"
     CATEGORY = NodeCategories.BITMAP_PROCESSING
@@ -101,9 +106,9 @@ class DPaint_BitmapResize:
             },
             "optional": {
                 "width_multiplier": ("FLOAT", {"min": 0.05, "max": 1.0, "step": 0.025}),
-                "width_pixels": ("INT", {"min": 1}),
+                "width_pixels": ("INT", {"min": BitMapImage.MIN_SIZE_PIXELS}),
                 "height_multiplier": ("FLOAT", {"min": 0.05, "max": 1.0, "step": 0.025}),
-                "height_pixels": ("INT", {"min": 1}),
+                "height_pixels": ("INT", {"min": BitMapImage.MIN_SIZE_PIXELS}),
             }
         }
 
@@ -115,12 +120,13 @@ class DPaint_BitmapResize:
         new_height = max(1,
                          kwargs.get("height_pixels", int(round(kwargs.get("height_multiplier", 1.0) * current_height))))
         if current_width != new_width or current_height != new_height:
-            return (bm.resize_to(new_width, new_height),)
+            return (bm.resize_to(max(BitMapImage.MIN_SIZE_PIXELS, new_width), max(BitMapImage.MIN_SIZE_PIXELS, new_height)),)
         else:
             return (bm,)
 
 
 class DPaint_BitmapCropCenter:
+    """Crops the center of a bitmap image."""
     NODE_NAME = "Bitmap Crop Center"
     ICON = "🔎"
     CATEGORY = NodeCategories.BITMAP_PROCESSING
@@ -159,12 +165,13 @@ class DPaint_BitmapCropCenter:
         if current_width != new_width or current_height != new_height:
             x = int(round((current_width - new_width) * 0.5))
             y = int(round((current_height - new_height) * 0.5))
-            return (bm.crop(x, y, new_width, new_height),)
+            return (bm.crop(x, y, max(BitMapImage.MIN_SIZE_PIXELS,new_width), max(BitMapImage.MIN_SIZE_PIXELS,new_height)),)
         else:
             return (bm,)
 
 
 class DPaint_BitmapExpandCanvas:
+    """Expends the canvas of a bitmap image by adding a border."""
     NODE_NAME = "Bitmap Expand Canvas"
     ICON = "🔎"
     CATEGORY = NodeCategories.BITMAP_PROCESSING
@@ -178,7 +185,7 @@ class DPaint_BitmapExpandCanvas:
             "required": {
                 "BITMAP": (BitMapImage.TYPE_NAME, {}),
                 "color": (["black", "white"],),
-                "border_pixels": ("INT", {"min": 1, "default": 16}),
+                "border_pixels": ("INT", {"min": 0, "default": 16}),
             }
         }
 
@@ -190,12 +197,15 @@ class DPaint_BitmapExpandCanvas:
         c = (0,)
         if color == "white":
             c = (1,)
+        if border_pixels == 0:
+            return (bm,)
 
         new_bm = BitMapImage.new_of_size(new_width, new_height, c)
         return (new_bm.paste(bm, border_pixels, border_pixels),)
 
 
 class DPaint_BitmapRotate:
+    """Rotates a bitmap image."""
     NODE_NAME = "Bitmap Rotate"
     ICON = "🔎"
     CATEGORY = NodeCategories.BITMAP_PROCESSING
@@ -225,6 +235,7 @@ class DPaint_BitmapRotate:
         return (bm.rotate(center_x, center_y, degrees, expand, fill_color),)
 
 class DPaint_BitmapEdge:
+    """Basic edge detection for bitmap images."""
     NODE_NAME = "Bitmap Edge Detect"
     ICON = "🔎"
     CATEGORY = NodeCategories.BITMAP_PROCESSING

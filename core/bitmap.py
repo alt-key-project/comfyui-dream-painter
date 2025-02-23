@@ -20,6 +20,7 @@ def fix_broken_image(pil_image: PIL.Image.Image) -> PIL.Image.Image:
 
 class BitMapImage:
     TYPE_NAME = "BITMAP"
+    MIN_SIZE_PIXELS = 4
 
     def __init__(self, pil_image: Image):
         if not isinstance(pil_image, PIL.Image.Image):
@@ -28,6 +29,10 @@ class BitMapImage:
             self._pil_image = pil_image.convert("1")
         else:
             self._pil_image = pil_image
+        if self.width < BitMapImage.MIN_SIZE_PIXELS or self.height < BitMapImage.MIN_SIZE_PIXELS:
+            factor = max(BitMapImage.MIN_SIZE_PIXELS / self.width, BitMapImage.MIN_SIZE_PIXELS / self.height)
+            newimg = self.resize_to(int(round(factor * self.width)), int(round(factor * self.height)))
+            self._pil_image = newimg._pil_image
 
 
     def paste(self, bitmap : Self, x, y):

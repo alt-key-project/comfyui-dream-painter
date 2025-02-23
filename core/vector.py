@@ -71,7 +71,7 @@ class Vector2d:
         return str(self)
 
     def __str__(self):
-        return "{:.3f},{:.3f}".format(self.x, self.y)
+        return "[{:.3f},{:.3f}]".format(self.x, self.y)
 
 
 def _intersect_lines(pt1, pt2, ptA, ptB):

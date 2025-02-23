@@ -3,11 +3,6 @@ import json
 import os
 
 _EMBEDDED_CONFIGURATION = {
-    "debug": False,
-    "paths": {
-        "default_input": "input",
-        "default_output": "output"
-    },
     "ui": {
         "top_category": "DPaint",
         "prepend_icon_to_category": True,
@@ -21,10 +16,10 @@ _EMBEDDED_CONFIGURATION = {
             "bitmap": "▩",
             "combine": "🟖",
             "process": "⚙",
-            "shape": "▢"
+            "shape": "▢",
+            "utility": "🧰",
         }
-    },
-
+    }
 }
 
 _config_data = None
